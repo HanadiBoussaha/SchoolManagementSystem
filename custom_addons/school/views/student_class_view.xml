@@ -1,0 +1,45 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="student_class_action" model="ir.actions.act_window">
+        <field name="name">Classe</field>
+        <field name="res_model">student.class</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+        <p>Cliquez sur nouveau pour créer une nouvelle classe </p>
+        </field>
+    </record>
+
+    <record id="student_class_form" model="ir.ui.view">
+        <field name="name">student.classe.form</field>
+        <field name="model">student.class</field>
+        <field name="arch" type="xml">
+            <form string="Classe">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="student_list" type="object" class="oe_stat_button" icon="fa-list">
+                            <field name="student_count" widget="statinfo" string="Liste de élèves"/>
+                        </button>
+                    </div>
+                    <group>
+                        <field name="name"/>
+                        <field name="description"/>
+                        <field name="student_ids" 
+                        invisible="1"
+                        />
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <menuitem
+        id="school_class_menu"
+        name="Classe"
+        action="student_class_action"
+        parent="school_menu"
+        sequence="10"/>
+
+    </odoo>

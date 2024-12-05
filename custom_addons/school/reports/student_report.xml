@@ -1,0 +1,114 @@
+<?xml version='1.0' encoding='utf-8'?>
+<odoo>
+    <record id="action_student_report" model="ir.actions.report">
+        <field name="name">Fiche d'inscription</field>
+        <field name="model">school.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school.student_report_template</field>
+        <field name="report_file">school.student_report_template</field>
+        <field name="binding_model_id" ref="model_school_student"/>
+        <field name="binding_type">report</field>
+    </record>
+
+<template id="student_report_template">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <!-- En-tête du rapport -->
+                    <div class="text-center">
+                        <h1>Fiche d'inscription</h1>
+                        <h3><span t-field="o.name"/></h3>
+                    </div>
+
+                    <!-- Informations générales sur l'élève -->
+                    <div class="row mt-4">
+                        <div class="col-6">
+                            <p><strong>Nom :</strong> <span t-field="o.name"/></p>
+                            <p><strong>Date de naissance :</strong> <span t-field="o.birth_date" t-options='{"format": "dd/MM/yyyy"}'/></p>
+                            <p><strong>Âge :</strong> <span t-field="o.age"/></p>
+                            <p><strong>Sexe :</strong> <span t-field="o.sexe"/></p>
+                        </div>
+                        <div class="col-6">
+                            <p><strong>Classe :</strong> <span t-field="o.class_id.name"/></p>
+                            <p><strong>Email :</strong> <span t-field="o.email"/></p>
+                            <p><strong>Téléphone :</strong> <span t-field="o.phone"/></p>
+                        </div>
+                    </div>
+
+                    <!-- Photo de l'élève -->
+                    <div class="text-center my-3">
+                        <t t-if="o.photo">
+                            <img width="150" height="150" t-att-src="'/web/image/school.student/' + str(o.id) + '/photo'" class="rounded-circle" alt="Photo de l'élève"/>
+                        </t>
+                        <t t-else="">
+                            <p><em>Aucune photo disponible</em></p>
+                        </t>
+                    </div>
+
+
+
+                    <!-- Signature -->
+                    <div class="mt-5 text-end">
+                        <p><strong>Signature :</strong></p>
+
+                    </div>
+                </div>
+            </t>
+        </t>
+    </t>
+</template>
+
+
+    <record id="action_carte_didentite" model="ir.actions.report">
+        <field name="name">Carte d'étudiant</field>
+        <field name="model">school.student</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">school.student_card_template</field>
+        <field name="report_file">school.student_card_template</field>
+        <field name="binding_model_id" ref="model_school_student"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <template id="student_card_template">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="web.basic_layout">
+                    <div class="page">
+                        <div class="container mt-5">
+                            <div class="id-card mx-auto">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5 class="card-title mb-0">Carte d'étudiant</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-5">
+                                                <t t-if="o.photo">
+                                                    <img width="200" t-att-src="'/web/image/school.student/' + str(o.id) + '/photo'" alt="avatar" />
+                                                </t>
+                                                <t t-else=''>
+                                                    toto
+                                                </t>
+                                            </div>
+                                            <div class="col-7">
+                                                <p><strong>Nom :</strong><span t-field="o.name"/></p>
+                                                <p><strong>Date de naissance :</strong><span t-field="o.birth_date"/></p>
+                                                <p><strong>Sexe :</strong><span t-field="o.sexe"/></p>
+                                                <p><strong>Classe :</strong><span t-field="o.class_id.name"/></p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <p><strong>Signature :</strong></p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </t>
+    </template>
+</odoo>
